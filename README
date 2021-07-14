@@ -1,0 +1,30 @@
+README
+
+!!! Vayamos anotando por aca lo que vamos haciendo
+!!! y las dudas que tengamos.
+
+
+Estructura de la carpeta:
+
+Tools: Contiene los tdas auxiliares que vayamos a usar
+1) strutil.c   (Ruta del .h == tools/strutil.h)
+2) count_min_sketch.c (Ruta del .h == tools/count_min_sketch.h)
+
+Pruebas: Contiene los archivos de pruebas
+
+- > pruebas/pruebas_tweets (Aca nos dieron unas pruebas con un .py para usar.
+    No entiendo bien si deberiamos usarlo o solo los archivos)
+- > pruebas/pruebas_usuarios
+
+programas(sueltos)
+
+1) procesar_tweets(.h y .c)
+2) procesar_ususarios(.h y .c) 
+
+MAKEFILE:
+-> tweets compila procesar_tweets.c con sus respectivas pruebas en tweets.o
+-> usuarios compila procesar_ususarios.c con sus respectivas pruebas en usuarios.o
+-> valt ejecuta tweets.o con valgrind incluido
+-> valu ejecuta usuarios.o con valgrind incluido
+
+!!! Nota: las pruebas todavia tenemos que ver como las hacemos 
