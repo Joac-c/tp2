@@ -32,7 +32,8 @@ size_t generar_indice_3(const char *clave, size_t tam){
 
 
 typedef struct count_min_sec{
-    size_t** arreglos[3];
+    size_t** arreglos;
+    size_t tam;
 }cms_t;
 
 
@@ -51,6 +52,7 @@ cms_t* crear_cms(size_t tam){
     
     cms_t* cms = calloc(1, sizeof(cms_t));
     cms->arreglos = arreglos;
+    cms->tam = tam;
     return cms;
 }
 
@@ -71,14 +73,14 @@ cms_t* cargar_cms(char** hashtags, size_t tam){
 }
 
 
-size_t** devolver_apariciones_cms(cms_t* cms, char** hashtag, size_t tam){
+size_t** devolver_apariciones_cms(cms_t* cms, char** hashtag){
         
         
-        size_t indice1 = generar_indice_1(hashtag, tam);
+        size_t indice1 = generar_indice_1(hashtag, cms->tam);
         
-        size_t indice2 = generar_indice_2(hashtag, tam);
+        size_t indice2 = generar_indice_2(hashtag, cms->tam);
         
-        size_t indice3 = generar_indice_3(hashtag, tam);
+        size_t indice3 = generar_indice_3(hashtag, cms->tam);
 
         size_t min = cms->arreglos[indice1];
         if(cms->arreglos[indice2] < min) min = cms->arreglos[indice2];
@@ -89,6 +91,9 @@ size_t** devolver_apariciones_cms(cms_t* cms, char** hashtag, size_t tam){
     
 
 
+void destruir_cms(cms_t* cms){
+    free(cms);
+}
 
 
 
