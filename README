@@ -11,12 +11,15 @@ Tools: Contiene los tdas auxiliares que vayamos a usar
 
 2) count_min_sketch.c (Ruta del .h == tools/count_min_sketch.h)
 
+
     
 
 Pruebas: Contiene los archivos de pruebas
 
 - > pruebas/pruebas_tweets (Aca nos dieron unas pruebas con un .py para usar.
     No entiendo bien si deberiamos usarlo o solo los archivos)
+    [YA COMPILA BIEN]
+
 - > pruebas/pruebas_usuarios
 
 programas(sueltos)
@@ -30,4 +33,9 @@ MAKEFILE:
 -> valt ejecuta tweets.o con valgrind incluido
 -> valu ejecuta usuarios.o con valgrind incluido
 
-!!! Nota: las pruebas todavia tenemos que ver como las hacemos 
+!!! Nota: las pruebas todavia tenemos que ver como las hacemos
+
+
+DIARIO:
+
+    16/7 Procesar tweets ya compila bien. Hay que realizar las pruebas de funcionamiento.
