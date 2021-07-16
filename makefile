@@ -11,8 +11,8 @@ VFLAGS= --leak-check=full --track-origins=yes --show-reachable=yes
 usuarios: procesar_usuarios.c count_min_sketch.c  strutil.c 
 		$(CC) procesar_usuarios.c count_min_sketch.c  strutil.c  $(CFLAGS) $(WFLAGS) -lm -o usuarios
 
-tweets: procesar_tweets.c count_min_sketch.c  strutil.c cola.c infix.c
-		$(CC) procesar_tweets.c count_min_sketch.c  strutil.c cola.c infix.c  $(CFLAGS) $(WFLAGS) -lm -o tweets
+tweets: procesar_tweets.c tools/count_min_sketch.c  tools/strutil.c tools/hash.c tools/lista.c tools/heap.c
+		$(CC) procesar_tweets.c tools/count_min_sketch.c  tools/strutil.c tools/hash.c tools/lista.c tools/heap.c  $(CFLAGS) $(WFLAGS) -lm -o tweets
 valu: usuarios
 		$(V) $(VFLAGS) ./usuarios < arch.txt
 

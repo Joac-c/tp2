@@ -8,7 +8,10 @@ Estructura de la carpeta:
 
 Tools: Contiene los tdas auxiliares que vayamos a usar
 1) strutil.c   (Ruta del .h == tools/strutil.h)
+
 2) count_min_sketch.c (Ruta del .h == tools/count_min_sketch.h)
+
+    
 
 Pruebas: Contiene los archivos de pruebas
 
