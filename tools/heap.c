@@ -53,8 +53,8 @@ void down_heap(void** elementos, size_t posicion_padre, size_t tam, cmp_func_t c
     }
 }
 void heapify(void** elementos, size_t tam, cmp_func_t cmp){
-    int pivote=(int)obtener_pivote_heapify(tam);
-    for(int i=pivote; i>=0; i--){
+    size_t pivote=(size_t)obtener_pivote_heapify(tam);
+    for(size_t i=pivote; i>=0; i--){
         down_heap(elementos, i, tam, cmp);
     }
 }

@@ -39,33 +39,38 @@ typedef struct count_min_sec{
 
 
 cms_t* crear_cms(size_t tam){
-    size_t arreglo1[tam];
-    size_t arreglo2[tam];
-    size_t arreglo3[tam];
-
+    
+    size_t* arreglo1 = calloc(tam, sizeof(size_t));
+    size_t* arreglo2 = calloc(tam, sizeof(size_t));
+    size_t* arreglo3 = calloc(tam, sizeof(size_t));
+    /*
     for(size_t i = 0; i < tam; i++){
         arreglo1[i] = 0;
         arreglo2[i] = 0;
         arreglo3[i] = 0;
-    } 
-    size_t* arreglos[3];
+    }
+    */ 
+    size_t* arreglos[] = {arreglo1, arreglo2, arreglo3};
 
-    arreglos[0] = arreglo1;
-    arreglos[1] = arreglo2;
-    arreglos[2] = arreglo3;
-    
+
     cms_t* cms = calloc(1, sizeof(cms_t));
+    
+    
     cms->arreglos = arreglos;
     cms->tam = tam;
+    cms->arreglos[0][2]++;
+    printf("al crear existen los valores de los indices %ld, %ld, %ld\n", cms->arreglos[0][2], cms->arreglos[1][2], cms->arreglos[2][2] );
+    
     return cms;
 }
 
 
 void cargar_cms(cms_t* cms, char* hashtag){
     
-    
+    printf("al cargar existen los valores de los indices %ld, %ld, %ld\n", cms->arreglos[0][2], cms->arreglos[1][2], cms->arreglos[2][2] );
     size_t indice = 0;
     indice = generar_indice_1(hashtag, cms->tam);
+
     cms->arreglos[0][indice]++;
     indice = generar_indice_2(hashtag, cms->tam);
     cms->arreglos[1][indice]++;
