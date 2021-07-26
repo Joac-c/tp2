@@ -46,36 +46,6 @@ char **split(const char *str, char sep){
     return _split(puntero, sep, palabras);
 }
 
-/*
-char* _join(char **strv, char sep, size_t caracteres, size_t indice,  size_t palabra){
-    if(strv[palabra] == NULL) {
-        
-        if(palabra == 0) caracteres = 1; 
-        char* cadena = calloc(caracteres , sizeof(char*));
-        cadena[caracteres]  = '\0';
-        return cadena;  
-    }
-    bool saltear = false;
-    bool fin = false;
-    if(strv[palabra][indice] == '\0'){
-        palabra++;
-        indice = 0;
-        saltear = (sep == '\0');
-        fin = true;   
-        
-    }
-    else indice++;
-    char* cadena = _join(strv, sep, caracteres + !saltear, indice, palabra);
-    if(!saltear && !fin) cadena[caracteres] = strv[palabra][indice - 1];
-    else if(!saltear && fin && strv[palabra] != NULL) cadena[caracteres] = sep;
-    return cadena;
-
-}
-
-*/
-
-
-
 
 
 
@@ -140,7 +110,7 @@ void free_strv(char *strv[]){
         free(strv[indice]);
         indice++;
 
-}
+    }
     free(strv);
 }
 
