@@ -30,8 +30,9 @@ typedef struct hashtag
 
 
 void liberar_ht(void* elem){
-
+    
     ht_t* ht = (ht_t*)elem;
+    printf("liberando %s \n", ht->clave);
     free(ht->clave);
     free(ht);
 }
@@ -69,6 +70,7 @@ bool imprimir_ht(heap_t* heap, int k){
         if(ht) liberar_ht(ht); //Libero el hashtag impreso
         if(!exito) break;
         i++;
+        printf("\n");
     }
     return exito;
 
@@ -82,15 +84,15 @@ void imprimir_tokens(char** tokens){
 }
 
 void cargar_hashtags(char** tokens, cms_t* cms, hash_t* hash ){
-    int i = 1;
+    int i = 2;
     while (tokens[i] != NULL){
         cargar_cms(cms, tokens[i]);
-        //printf("las apariciones de %s son: %ld\n", tokens[i],  devolver_apariciones_cms(cms, tokens[i]));
-        hash_guardar(hash, tokens[i], tokens[i]);
+        printf("las apariciones de %s son: %ld\n", tokens[i],  devolver_apariciones_cms(cms, tokens[i]));
+        hash_guardar(hash, tokens[i],NULL);
 
         i++;
     }
-    free(tokens[0]);
+    //free(tokens[0]);
     
 }
 
@@ -99,13 +101,17 @@ bool descargar_tweets(cms_t* cms, hash_t* hash, size_t n){
     char* cadena = NULL;
     size_t tam = 0;
     ssize_t cargados =  getline(&cadena, &tam, stdin);
-    if(cargados <= 1) return false;
+    if(cargados <= 1){
+        free(cadena);
+        return false;
+    }
+    
     for(size_t i = 0; i < n && cargados > 1; i++){
-        cadena[cargados - 1] = '\0';
+        if(cadena[cargados - 1] == '\n') cadena[cargados - 1] = '\0';
         char** tokens = split(cadena, ',');
         //imprimir_tokens(tokens);
         cargar_hashtags(tokens, cms, hash);
-        free(tokens);
+        free_strv(tokens);
         cargados = getline(&cadena, &tam, stdin);
         
     }
@@ -122,12 +128,11 @@ bool cargar_heap(heap_t* heap, cms_t* cms, hash_t* hash){
     if(!iter) exito = false;
     while(!hash_iter_al_final(iter)){
         char* clave = (char*)hash_iter_ver_actual(iter);
-        
         size_t  min = devolver_apariciones_cms(cms, clave);
-        //printf("las apariciones de %s son: %ld\n", clave, min);
+        printf("las apariciones de %s son: %ld\n", clave, min);
         ht_t* ht = calloc(1, sizeof(ht_t));  //Reservo memoria para cada hashtag
         ht->apariciones = min;
-        ht->clave = (char*)hash_obtener(hash, clave);
+        ht->clave = _copiar_clave(clave, 0);
         exito = heap_encolar(heap, ht);
         hash_iter_avanzar(iter);
     }
@@ -169,7 +174,7 @@ void procesar_tweets(size_t n, int k){
             break;
         }
         
-        printf("--- %d\n", k);
+        printf("--- %d\n", iters);
         //Cargo en el heap los hashtags(con sus apariciones) ordenados por cantidad de apariciones
         exito = cargar_heap(heap, cms, hash);
         //Destruyo el hash y el cms
@@ -184,6 +189,9 @@ void procesar_tweets(size_t n, int k){
         //else printf("Exito cargando el heap\n\n");
         
         //Desencolo n hashtags del heap y los imprimo en pantalla junto con sus apariciones. 
+        
+
+        //La perdida de memoria no depende de la impresion
         if(!imprimir_ht(heap, k)){
             //printf("imprimir ");
             levantar_error();
@@ -192,28 +200,14 @@ void procesar_tweets(size_t n, int k){
         
         //Destruyo el heap liberando los hashtags sobrantes
         heap_destruir(heap, liberar_ht);
+       
+        
     }
     destruir_cms(cms); 
 }
 
 
 int main(){
-    /*
-    cms_t* cms = crear_cms(5);
-    cargar_cms(cms, "spymaster");
-    printf("\n");
-    cargar_cms(cms, "poncho");
-    printf("\n");
-    cargar_cms(cms, "spymaster");
-    printf("\n");
-    cargar_cms(cms, "dqwñeoinouygyfgv");
-    printf("\n");
-    cargar_cms(cms, "spymaster");
-    printf("\n");
-    cargar_cms(cms, "wqfhvb");
-    printf("\n");
-    printf("las apariciones son: %ld\n", devolver_apariciones_cms(cms, "spymaster"));
-    destruir_cms(cms);
-   */
-   procesar_tweets(3, 2);
+    
+   procesar_tweets(1, 1);
 }
